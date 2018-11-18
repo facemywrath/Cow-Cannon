@@ -60,8 +60,10 @@ public class EventListener {
 			if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 			Player player = event.getPlayer();
  			if(player.getInventory().getItemInMainHand() == null || player.getInventory().getItemInMainHand().getType() == Material.AIR) return;
-			ItemStack hand = player.getInventory().getItemInMainHand();
+			ItemStack hand = player.getInventory().getItemInMainHand().clone();
+			hand.setDurability(getCannonItem().getDurability());
 			if(!hand.isSimilar(getCannonItem())) return;
+			event.setCancelled(true);
 			if(!player.getInventory().contains(Material.EGG))
 			{
 				player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4Requires chicken eggs to shoot"));
